@@ -5,7 +5,7 @@ class Track {
   ArrayList<PVector> offsetPts;
 
   Track(ArrayList<PVector> pts) {
-    radius = 20;
+    radius = 3;
     points = pts; 
     revDir = true;
   }
