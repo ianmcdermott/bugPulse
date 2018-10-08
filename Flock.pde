@@ -7,10 +7,10 @@ class Flock {
     boids = new ArrayList<Boid>(); // Initialize the ArrayList
   }
 
-  void run() {
+  void run(int displayWingsFrame) {
     pushMatrix();
     for (Boid b : boids) {
-      b.run(boids);  // Passing the entire list of boids to each boid individually
+      b.run(boids, displayWingsFrame);  // Passing the entire list of boids to each boid individually
       //b.seek(new PVector(curves[0][0].curr.x-w*3/4, curves[0][0].curr.y - w*3/4));
       //b.seek(new PVector(curves[0][0].curr.x-w*3/4, curves[0][0].curr.y - w*3/4));
 

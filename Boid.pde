@@ -13,7 +13,7 @@ class Boid {
   PVector leader;
   float desiredseparation;
   float blinkDepth;
-
+  float speed = 0;
   Boid(float x, float y, float _r, float ms, float mf, float bo, float bd) {
     acceleration = new PVector(0, 0);
 
@@ -33,11 +33,11 @@ class Boid {
     blinkDepth  = bd;
   }
 
-  void run(ArrayList<Boid> boids) {
+  void run(ArrayList<Boid> boids, int displayWingsFrame) {
     flock(boids);
     update();
     borders();
-    render();
+    render(displayWingsFrame);
     //leader = new PVector(curves[0][0].curr.x, curves[0][0].curr.y);
 
     blink = int(sin((blinkOffset*frameCount)/20)*100+blinkDepth);//*.25+.75;
@@ -88,7 +88,7 @@ class Boid {
     velocity.limit(maxspeed);
     position.add(velocity);
     // Reset accelertion to 0 each cycle
-
+    speed = acceleration.mag()*3;
 
     acceleration.mult(0);
   }
@@ -118,7 +118,7 @@ class Boid {
     return steer;
   }
 
-  void render() {
+  void render(int displayWingsFrame) {
     // Draw a triangle rotated in the direction of velocity
     float theta = velocity.heading2D() + radians(90);
     // heading2D() above is now heading() but leaving old syntax until Processing.js catches up
@@ -138,9 +138,10 @@ class Boid {
     ellipse(0, r*2, r*3, r*3);
 
     pushMatrix();
-    scale(r*.1);
-    translate(-20, -20);
-    image(lbug, 0, 0);
+    scale(r*.075);
+    translate(0, -50);
+    wings.display(-100, 0, displayWingsFrame, velocity.mag());
+    //image(lbug, 0, 0);
     popMatrix();
 
     popMatrix();

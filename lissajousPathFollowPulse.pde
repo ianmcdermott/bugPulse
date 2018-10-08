@@ -3,6 +3,11 @@
 //optimize boids to only detect a chunk of the array list of points
 import processing.serial.*;  // serial library lets us talk to Arduino
 
+//Sprite
+Wings wings;
+PImage[] wingImages;
+int imageCount = 119;
+
 int w = 800;
 int cols;
 int rows;
@@ -40,6 +45,10 @@ boolean boidsOn = false;
 boolean flockingOn = false;
 boolean pathFollow = true;
 
+int textAlpha = 0;
+boolean textAlphaIncrease = false;
+int alphaCount = 0;
+boolean startAlphaCount = false;
 
 String pulseText1 = "";
 String pulseText2 = "";
@@ -81,6 +90,9 @@ void setup() {
       curves[j][i] = new Curve();
     }
   }
+    wingImages = new PImage[imageCount];
+
+  loadWings();
   lbug = loadImage("bug-01.png");
   smooth();
   vertGuides = new Guide[rows];
@@ -103,6 +115,9 @@ void setup() {
   //}
 
   port = new Serial(this, "/dev/tty.usbmodem1421", 115200);
+
+  //wings sprite
+  wings = new Wings(imageCount);
 }
 
 void draw() {
@@ -122,7 +137,9 @@ void draw() {
     background(0);
     stroke(255);
     noFill();
+    println(textAlpha);
 
+    fill(200, 255, 255, textAlpha);
     textSize(150);
     textAlign(LEFT);
     text(pulseText1, 80, height/2); 
@@ -150,7 +167,7 @@ void draw() {
 
     for (int j =0; j < rows; j++) {
       for (int i =0; i < cols; i++) {
-        curves[j][i].addPoint();
+        curves[j][i].addPoint(frameCount);
         curves[j][i].show();
       }
     }
@@ -168,6 +185,26 @@ void draw() {
 
     checkPulse();
   }
+
+  if (textAlphaIncrease) {
+    textAlpha++;
+  }
+
+  if (textAlpha >= 255) {
+    textAlphaIncrease = false;
+  }
+
+  if (textAlphaIncrease == false && startAlphaCount) {
+    alphaCount++;
+    if (alphaCount >= 120) {
+      textAlpha--;
+      if (textAlpha <= 0) {
+        textAlpha = 0;
+        alphaCount = 0;
+        startAlphaCount = false;
+      }
+    }
+  }
 }
 
 void keyPressed() {
@@ -183,6 +220,7 @@ void keyPressed() {
   }
   if (key == 'c' || key == 'C') clearVisuals();
   if (key == 'q') {
+    textAlphaIncrease = true;
     if (beat1) {
       count1 = 0;
       startCount1 = true;
@@ -199,10 +237,9 @@ void keyReleased() {
   if (key == 'q') {
     startCount1 = false;
     startCount2 = false;
-
     curves[0][0].reset();
     beat1 = !beat1;
-
+    startAlphaCount = true;
     flockingOn = false;
   }
 }
@@ -217,7 +254,7 @@ void checkPulse() {
     osc2 = BPM;
     pulseText2 = str(BPM);
   } 
-  println("BPM: "+BPM);
+  //println("BPM: "+BPM);
 }
 void clearVisuals() {
   debug = false;
@@ -261,5 +298,15 @@ void resetDataTraces() {
   }
   for (int i=0; i<RawY.length; i++) {
     RawY[i] = height/2; // initialize the pulse window data line to V/2
+  }
+}
+
+void loadWings() {
+  for (int i = 0; i < imageCount; i++) {
+    // Use nf() to number format 'i' into four digits
+    String filename = "data/lighteningbug_" + nf(i, 5) + ".png";
+    println(filename);
+    //wImage = loadImage(filename);
+    wingImages[i] = loadImage(filename);
   }
 }

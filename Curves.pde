@@ -1,7 +1,7 @@
 class Curve {
   ArrayList<PVector> path;
   PVector curr;
-  int numBoids = 1000;
+  int numBoids = 800;
 
   Track track;
 
@@ -15,12 +15,12 @@ class Curve {
     flock = new Flock();
     // Add an initial set of boids into the system
     for (int i = 0; i < numBoids; i++) {
-      flock.addBoid(new Boid(width/2, height/2, random(1, 5), random(1, 4), random(.09, .5), random(0, 1), random(.1, .9)));
+      flock.addBoid(new Boid(width/2, height/2, random(.25, 3), random(1, 4), random(.09, .5), random(0, 1), random(.1, .9)));
     }
     track = new Track(path);
   }
 
-  void addPoint() {
+  void addPoint(int displayWingsFrame) {
     if (angle > -TWO_PI) {
       path.add(curr);
       track.update(path);
@@ -37,7 +37,7 @@ class Curve {
 
 
     if (boidsOn) {
-      flock.run();
+      flock.run(displayWingsFrame);
     }
   }
 
