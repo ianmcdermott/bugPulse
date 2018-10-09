@@ -2,7 +2,7 @@ class Curve {
   ArrayList<PVector> path;
   PVector curr;
   int numBoids = 500;
-
+  int boidCounter;
   Track track;
 
   ParticleSystem ps;
@@ -15,7 +15,7 @@ class Curve {
     flock = new Flock();
     // Add an initial set of boids into the system
     for (int i = 0; i < numBoids; i++) {
-      flock.addBoid(new Boid(width/2, height/2, random(.25, 3), random(1, 4), random(.09, .5), random(0, 1), random(.1, .9)));
+      flock.addBoid(new Boid(width/2, height/2, random(.25, 3), random(1, 4), random(.09, .5), random(0, 10), random(.1, .9)));
     }
     track = new Track(path);
   }
@@ -52,7 +52,7 @@ class Curve {
   void setY(float y) {
     curr.y = y;
   }
-  void show() {
+  void show(float noiseWeight) {
     stroke(255, 50);
     strokeWeight(strokeW);
     noFill();
@@ -61,7 +61,14 @@ class Curve {
       //translate(-w*3/4, -w*3/4);
       beginShape();
       for ( PVector v : path) {
-        vertex(v.x, v.y);
+        //vertex(v.x, v.y);
+        wave = noise(((noiseWeight+v.x)*.01), (noiseWeight+v.y)*.008)*6-.5;
+        strokeWeight(wave);
+      println("wave: "+wave);
+        stroke(255, 255-map(wave, 0, 6, 0, 150));
+        boidCounter++;
+        //strokeWeight(1);
+        point(v.x, v.y);
       }
 
       endShape();

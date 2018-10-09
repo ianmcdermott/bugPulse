@@ -10,7 +10,6 @@ class Wings {
   }
 
   void display(float xpos, float ypos, int displayWingsFrame, float speed) {
-    println("SPEED:  "+speed);
       frame = (displayWingsFrame+1)*(5/int(speed+1))*3 % imageCount;
       image(wingImages[frame], xpos, ypos);
     

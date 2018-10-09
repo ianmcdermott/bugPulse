@@ -78,7 +78,7 @@ String[] serialPorts = new String[Serial.list().length];
 boolean serialPortFound = false;
 int numPorts = serialPorts.length;
 boolean refreshPorts = false;
-
+float wave;
 void setup() {
   //size(2000, 1200, P2D);
   fullScreen(P2D);
@@ -90,7 +90,7 @@ void setup() {
       curves[j][i] = new Curve();
     }
   }
-    wingImages = new PImage[imageCount];
+  wingImages = new PImage[imageCount];
 
   loadWings();
   lbug = loadImage("bug-01.png");
@@ -133,8 +133,8 @@ void draw() {
     if (refreshPorts) {
       refreshPorts = false;
     }
-
-
+    
+    
     background(0);
     stroke(255);
     noFill();
@@ -169,7 +169,7 @@ void draw() {
     for (int j =0; j < rows; j++) {
       for (int i =0; i < cols; i++) {
         curves[j][i].addPoint(frameCount);
-        curves[j][i].show();
+        curves[j][i].show(frameCount+i+j);
       }
     }
 
