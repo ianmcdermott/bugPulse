@@ -14,6 +14,7 @@ class Boid {
   float desiredseparation;
   float blinkDepth;
   float speed = 0;
+  
   Boid(float x, float y, float _r, float ms, float mf, float bo, float bd) {
     acceleration = new PVector(0, 0);
 
@@ -29,7 +30,7 @@ class Boid {
     maxspeed = ms;
     maxforce = mf;
     blinkOffset = bo;
-    desiredseparation = r*2;
+    desiredseparation = r*4;
     blinkDepth  = bd;
   }
 
@@ -135,7 +136,7 @@ class Boid {
     //endShape();
     colorMode(HSB, 100);
     fill(20, 100, 100-blink);
-    ellipse(0, r*2, r*3, r*3);
+    ellipse(0, r*2, r*3, r*6);
 
     pushMatrix();
     scale(r*.075);

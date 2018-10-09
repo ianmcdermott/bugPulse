@@ -8,7 +8,7 @@ Wings wings;
 PImage[] wingImages;
 int imageCount = 119;
 
-int w = 800;
+int w = 600;
 int cols;
 int rows;
 float d = w-10;
@@ -37,13 +37,13 @@ PImage lbug;
 //boolean osc = true;
 
 boolean debug = false;
-boolean lissalines = true;
+boolean lissalines = false;
 boolean particlesOn = false;
 boolean fractalsOn = false;
 boolean springsOn = false;
-boolean boidsOn = false;
-boolean flockingOn = false;
-boolean pathFollow = true;
+boolean boidsOn = true;
+boolean flockingOn = true;
+boolean pathFollow = false;
 
 int textAlpha = 0;
 boolean textAlphaIncrease = false;
@@ -118,6 +118,7 @@ void setup() {
 
   //wings sprite
   wings = new Wings(imageCount);
+  noCursor();
 }
 
 void draw() {
@@ -190,13 +191,13 @@ void draw() {
     textAlpha++;
   }
 
-  if (textAlpha >= 255) {
+  if (textAlpha >= 150) {
     textAlphaIncrease = false;
   }
 
   if (textAlphaIncrease == false && startAlphaCount) {
     alphaCount++;
-    if (alphaCount >= 120) {
+    if (alphaCount >= 30) {
       textAlpha--;
       if (textAlpha <= 0) {
         textAlpha = 0;

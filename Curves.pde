@@ -1,7 +1,7 @@
 class Curve {
   ArrayList<PVector> path;
   PVector curr;
-  int numBoids = 800;
+  int numBoids = 500;
 
   Track track;
 
