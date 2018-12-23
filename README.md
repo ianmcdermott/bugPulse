@@ -13,9 +13,8 @@ Geared toward families with young children, but open to any museum-goer.
 Building on the idea of generative bio-art of Raphael Lozano-Hemmer's <i>Pulse</i> exhibit, 
 I developed a few applications using similar ideas. With the finger pulse sensor used in the <i>Pulse Tank</i> 
 installation, two visitors at a time take their individual beats per minute, which are then used used as 
-variables, processed by a Lissajous algorithm, which produces a pattern based on the inputs. 
-The application draws the pattern in realtime, currently in two formats, as lightening bugs and as dotted 
-lines. In this way, visitors are able to create an abstract two-person portrait.
+variables, processed by a Lissajous algorithm, which produces a lissajous pattern based on the inputs. 
+Animated Lightening Bug sprites then follow the path, referencing Lozano-Hemmer's <i>Pulse Room</i> in a child-like way.
 
 ## References I Used to Learn How to Make It:
 <b>Raphael Lozano-Hemmer Code</b> - https://github.com/antimodular/PulseTank_osc </br>
